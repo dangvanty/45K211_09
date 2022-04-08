@@ -133,3 +133,120 @@ exports.resetPassword= catchAsyncErrors(async(req,res,next)=>{
 
     sendToken(user, 200, res);
 })
+
+//get user detail 
+exports.getUserDetails=catchAsyncErrors(async(req,res,next)=>{
+    const user = await User.findById(req.user.id);
+
+    res.status(200).json({
+        success:true,
+        user,
+    })
+})
+
+//update User password:
+
+exports.updatePassword = catchAsyncErrors(async(req,res,next)=>{
+    const user =await await User.findById(req.user.id).select("+password");
+
+    const isPassMatched =await user.comparePassword(req.body.oldPassword);
+
+    if(!isPassMatched){
+        return next(new ErrorHander("Mật khẩu cũ không chính xác",400));
+    }
+
+    if(req.body.newPassword !==req.body.confirmPassword){
+        return next (new ErrorHander("Mật khẩu không giống nhau",400))
+    }
+
+    user.password=req.body.newPassword;
+    
+    await user.save();
+
+    sendToken(user, 200, res);
+
+})
+
+//update User profile
+
+exports.updateUserProfile=catchAsyncErrors(async(req,res,next)=>{
+    const newUserProfile={
+        name: req.body.name,
+        email: req.body.email,
+    }
+
+    // add cloudinary later
+
+    const user=await User.findByIdAndUpdate(req.user.id,newUserProfile,{
+        new:true,
+        runValidators:true,
+        useFindAndModify:false,
+    })
+
+    res.status(200).json({
+        success: true,
+      });
+})
+
+//get all user -- admin
+exports.getAllUser=catchAsyncErrors(async(req,res,next)=>{
+    const users =await User.find();
+
+    res.status(200).json({
+        success: true,
+        users,
+    });
+})
+
+//get single user --admin
+exports.getSingleUser =catchAsyncErrors(async(req,res,next)=>{
+    const user=await User.findById(req.params.id);
+
+    if(!user){
+        return next(
+            new ErrorHander(`User không tồn tại với ID: ${req.params.id}`)
+        )
+    }
+
+    res.status(200).json({
+        success:true,
+        user,
+    })
+})
+
+//update User role (admin)
+
+exports.updateUserRole=catchAsyncErrors(async(req,res,next)=>{
+    const newUserProfile={
+        name:req.body.name,
+        email:req.body.email,
+        role:req.body.role,
+    }
+
+    await User.findByIdAndUpdate(req.params.id,newUserProfile,{
+        new:true,
+        runValidators:true,
+        useFindAndModify:false,
+    })
+
+    res.status(200).json({
+        success:true,
+    })
+})
+
+// delete User --admin:
+exports.deleteUser=catchAsyncErrors(async(req,res,next)=>{
+    const user =await User.findById(req.params.id);
+
+    if(!user){
+        return next(
+            new ErrorHander(`User không tồn tại với ID: ${req.params.id}`,400)
+        )
+    }
+    await user.remove();
+    res.status(200).json({
+        success:true,
+        message:"Bạn đã xóa User thành công"
+    })
+})
+
