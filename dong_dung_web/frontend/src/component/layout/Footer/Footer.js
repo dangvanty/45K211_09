@@ -51,7 +51,7 @@ function Footer () {
              <Link to='/'>Nội thất phòng khách</Link>
              <Link to='/'>Nội thất phòng ngủ</Link>
              <Link to='/'>Nội thất phòng thờ</Link>
-             <Link to='/'>Đồ gõ mỹ nghệ</Link>
+             <Link to='/'>Đồ gỗ mỹ nghệ</Link>
          </div>
          <div className='footer-link-items'>
              <h2>Truyền thông</h2>
