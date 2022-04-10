@@ -2,9 +2,12 @@ import React from 'react'
 
 import { Link } from 'react-router-dom'
 
-import { Button } from '../Button/Button.js';
 import './Footer.css'
 import logo from "../../../images/logo.png"
+import MyComponent from './GoogleApiWrapper.js';
+
+
+
 function Footer () {
   return (
     <div className='footer-container'>
@@ -16,7 +19,10 @@ function Footer () {
            <p className='footer-subcription-text'>
               Địa chỉ: Điện An - Điện Bàn - Quảng Nam
            </p>
-           <div className='input-areas'>
+           <div className='footer-subcription-map'>
+             <MyComponent/>
+            </div>
+           {/* <div className='input-areas'>
                <form>
                    <input className=' footer-input'
                    name='email'
@@ -25,7 +31,7 @@ function Footer () {
                    />
                    <Button buttonStyle='btn--outline'>Gửi đi</Button>
                </form>
-           </div>
+           </div> */}
        </section>
        <div className='footer-links'>
         <div className='footer-link-wrapper'>
