@@ -10,24 +10,25 @@ exports.createProduct= catchAsyncErrors(async(req,res,next)=> {
     res.status(201).json({
         success:true,
         products
-    })   
+    })
 })
 
-// get all product 
+// get all product
 exports.getAllProducts = catchAsyncErrors(async (req,res, next )=>{
+        // return next(new ErrorHander("trang bị lỗi",500))
         const resultPerPage=8;
         const productsCount=await Product.countDocuments();
 
         const apiFeature = new ApiFeatures(Product.find(), req.query)
         .search()
         .filter();
-    
+
         let products = await apiFeature.query;
-        
+
         let filteredProductsCount = products.length;
-        
+
         apiFeature.pagination(resultPerPage);
-        
+
         products = await apiFeature.query;
         res.status(200).json({
             success:true,
@@ -46,13 +47,11 @@ exports.getProductDetails =catchAsyncErrors(async(req,res,next)=>{
         if(!product){
             return next(new ErrorHander("Không tìm thấy sản phẩm nào",404))
         }
-    
-    
-    
+
     res.status(200).json({
         success:true,
         product,
-        
+
     })
 }
 )
@@ -62,11 +61,11 @@ exports.updateProduct = catchAsyncErrors(async(req,res,next)=>{
         let product = await Product.findById(req.params.id)
           if(!product){
                 return next(new ErrorHander("Không tìm thấy sản phẩm nào",404))
-            } 
-    
+            }
+
         product = await Product.findByIdAndUpdate(req.params.id,req.body,{
             new:true,
-            runValidators:true, 
+            runValidators:true,
             useFindAndModify:false
         })
         res.status(200).json({
@@ -83,15 +82,15 @@ exports.deleteProduct= catchAsyncErrors(async (req,res,next)=>{
          if(!product){
                 return next(new ErrorHander("Không tìm thấy sản phẩm nào",404))
             }
-            
+
         await product.remove();
-    
+
         res.status(200).json({
             success:true,
             message:"Xóa sản phẩm thành công",
             product
         })
-    }    
+    }
 )
 
 // Create new review or update the review
@@ -110,7 +109,7 @@ exports.createProductReview=catchAsyncErrors(async(req,res,next)=>{
 
     const isReviewed = product.reviews.find((rev)=>
         rev.user.toString()=== req.user._id.toString());
-    
+
     if(isReviewed){
         product.reviews.forEach((rev)=>{
             if(rev.user.toString()===req.user._id.toString())
@@ -136,11 +135,11 @@ exports.createProductReview=catchAsyncErrors(async(req,res,next)=>{
     });
 });
 
-//get all reviews of a product 
+//get all reviews of a product
 exports.getAllProcductReviews= catchAsyncErrors(async(req,res,next)=>{
 
     const product =await Product.findById(req.query.id);
-    
+
     if(!product){
         return next(new ErrorHander("Sản phẩm không được tìm thấy",404));
     }
@@ -151,34 +150,34 @@ exports.getAllProcductReviews= catchAsyncErrors(async(req,res,next)=>{
     })
 })
 
-//delete review 
+//delete review
 exports.deteteReview =catchAsyncErrors(async(req,res,next)=>{
     const product = await Product.findById(req.query.productId);
 
     if (!product) {
       return next(new ErrorHander("Sản phẩm không được tìm thấy", 404));
     }
-  
+
     const reviews = product.reviews.filter(
       (rev) => rev._id.toString() !== req.query.id.toString()
     );
-  
+
     let avg = 0;
-  
+
     reviews.forEach((rev) => {
       avg += rev.rating;
     });
-  
+
     let ratings = 0;
-  
+
     if (reviews.length === 0) {
       ratings = 0;
     } else {
       ratings = avg / reviews.length;
     }
-  
+
     const numOfReviews = reviews.length;
-  
+
     await Product.findByIdAndUpdate(
       req.query.productId,
       {
@@ -192,7 +191,7 @@ exports.deteteReview =catchAsyncErrors(async(req,res,next)=>{
         useFindAndModify: false,
       }
     );
-  
+
     res.status(200).json({
       success: true,
     });
