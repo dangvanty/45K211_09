@@ -13,7 +13,7 @@ import Contact from './component/layout/Contact/Contact'
 import NotFound from "./component/layout/Not Found/NotFound.js";
 import Products from './component/Product/Product'; 
 import Search from './component/Product/Search';
-
+import LoginSignUp from "./component/User/LoginSignUp.js"
 function App() {
 
   useEffect(() => {
@@ -35,7 +35,9 @@ function App() {
         <Route path="products/:keyword" element={<Products/>}/>
         <Route path="search" element={<Search/>}/>
         <Route  path='/contact' element = {<Contact/>}/>
+        <Route path='/login' element={<LoginSignUp/>}/>
         <Route path='*' element={<NotFound/>}/>
+
       </Routes>
 
       <Footer/>     

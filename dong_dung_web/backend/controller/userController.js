@@ -3,18 +3,28 @@ const catchAsyncErrors = require("../middleware/catchAsyncError");
 const User =require("../models/userModel");
 const sendToken=require("../utils/jwtToken");
 const crypto = require("crypto");
-const sendEmail=require("../utils/sendEmail")
+const sendEmail=require("../utils/sendEmail");
+const cloudinary =require("cloudinary")
 //Register a User
 exports.registerUser=catchAsyncErrors( async(req,res,next)=>{
+// const file = req.body.avatar
+  const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
+    folder: "avatars",
+    width: 150,
+    crop: "scale",
+    public_id: `${Date.now()}`,
+    resource_type: "auto",
+  });
+
     const { name, email, password }= req.body;
     const user= await User.create({
         name,
         email,
         password,
         avatar:{
-            public_id:"gdgdfg",
-            url:"dfsfs",
-        }, 
+            public_id:myCloud.public_id,
+            url:myCloud.secure_url,
+        },
     })
 
     sendToken(user,201,res);
@@ -24,8 +34,8 @@ exports.registerUser=catchAsyncErrors( async(req,res,next)=>{
 exports.loginUser =catchAsyncErrors(async (req,res,next)=>{
     const {email, password}=req.body;
 
-    //check if user has given password and email both 
-    
+    //check if user has given password and email both
+
     if (!email|| !password){
         return next (new ErrorHander("Vui lòng nhập Email và mật khẩu",400))
     }
@@ -86,7 +96,7 @@ exports.forgotPassword= catchAsyncErrors(async(req,res,next)=>{
             subject: `Khôi phục mật khẩu tài khoản ở Đồng Dũng website`,
             message,
         });
-    
+
         res.status(200).json({
             success: true,
             message: `Email đã được gửi tới ${user.email} thành công`,
@@ -94,18 +104,18 @@ exports.forgotPassword= catchAsyncErrors(async(req,res,next)=>{
     } catch (error) {
       user.resetPasswordToken = undefined;
       user.resetPasswordExpire = undefined;
-  
+
       await user.save({ validateBeforeSave: false });
-  
+
       return next(new ErrorHander(error.message, 500));
     }
-    
+
 })
 
 //reset password:
 
 exports.resetPassword= catchAsyncErrors(async(req,res,next)=>{
-    //creating token hash 
+    //creating token hash
     const resetPasswordToken=crypto
         .createHash("sha256")
         .update(req.params.token)
@@ -134,7 +144,7 @@ exports.resetPassword= catchAsyncErrors(async(req,res,next)=>{
     sendToken(user, 200, res);
 })
 
-//get user detail 
+//get user detail
 exports.getUserDetails=catchAsyncErrors(async(req,res,next)=>{
     const user = await User.findById(req.user.id);
 
@@ -160,7 +170,7 @@ exports.updatePassword = catchAsyncErrors(async(req,res,next)=>{
     }
 
     user.password=req.body.newPassword;
-    
+
     await user.save();
 
     sendToken(user, 200, res);
@@ -249,4 +259,3 @@ exports.deleteUser=catchAsyncErrors(async(req,res,next)=>{
         message:"Bạn đã xóa User thành công"
     })
 })
-
