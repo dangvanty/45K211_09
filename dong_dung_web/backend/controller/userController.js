@@ -84,11 +84,9 @@ exports.forgotPassword= catchAsyncErrors(async(req,res,next)=>{
 
     await user.save({validateBeforeSave:false});
 
-    const resetPasswordUrl=`${req.protocol}://${req.get(
-        "host"
-      )}/api/v1/password/reset/${resetToken}`;
+    const resetPasswordUrl=`${process.env.FRONTEND_URL}/password/reset/${resetToken}`;
 
-    const message =`Token reset mật khẩu của bạn là:- \n\n ${resetPasswordUrl} \n\n Nếu bạn không cần email này thì vui lòng bỏ qua nó.`;
+    const message =`Token reset mật khẩu của bạn là: \n\n ${resetPasswordUrl} \n\n Nếu bạn không cần email này thì vui lòng bỏ qua nó.`;
 
     try{
         await sendEmail({

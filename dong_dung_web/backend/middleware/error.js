@@ -18,10 +18,11 @@ if(err.code === 11000){
 
 // Wrong JWT error
 if (err.name === "JsonWebTokenError") {
-    const message = `Json Web Token không có sẵn, Vui lòng thử lại `;
+    // const message = `Json Web Token không có sẵn, Vui lòng thử lại `;
+    const message = ``;
     err = new ErrorHandler(message, 400);
   }
-  
+
 // JWT EXPIRE error
   if (err.name === "TokenExpiredError") {
     const message = `Json Web Token bị hết hạn,Vui lòng thử lại `;
@@ -35,4 +36,3 @@ if (err.name === "JsonWebTokenError") {
     })
 
 }
-
