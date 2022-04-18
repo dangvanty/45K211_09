@@ -24,6 +24,7 @@ import UpdateProfile  from './component/User/UpdateProfile'
 import UpdatePassword  from './component/User/UpdatePassword'
 import ForgotPassword  from './component/User/ForgotPassword'
 import ResetPassword  from './component/User/ResetPassword.js'
+import Cart  from './component/Cart/Cart.js'
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
   useEffect(() => {
@@ -55,6 +56,7 @@ function App() {
         <Route  path='/password/forgot' element = {<ForgotPassword/>}/>
         <Route  path='/password/reset/:token' element = {<ResetPassword/>}/>
 
+        <Route  path='/cart' element = {<Cart/>}/>
         <Route  path='/contact' element = {<Contact/>}/>
         <Route path='/login' element={<LoginSignUp/>}/>
         <Route path='*' element={<NotFound/>}/>

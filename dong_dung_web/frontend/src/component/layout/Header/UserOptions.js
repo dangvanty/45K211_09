@@ -13,6 +13,7 @@ import { logout } from "../../../actions/userActions";
 import { useDispatch, useSelector } from "react-redux";
 
 const UserOptions = ({user}) => {
+  const { cartItems } = useSelector((state) => state.cart);
     const [open, setOpen] = useState(false)
     const navigate=useNavigate();
     const alert=useAlert();
@@ -20,15 +21,15 @@ const UserOptions = ({user}) => {
     const options = [
         { icon: <ListAltIcon />, name: "Đơn hàng", func: orders },
         { icon: <PersonIcon />, name: "Cá nhân", func: account },
-        // {
-        //   icon: (
-        //     <ShoppingCartIcon
-        //       style={{ color: cartItems.length > 0 ? "tomato" : "unset" }}
-        //     />
-        //   ),
-        //   name: `Cart(${cartItems.length})`,
-        //   func: cart,
-        // },
+        {
+          icon: (
+            <ShoppingCartIcon
+              style={{ color: cartItems.length > 0 ? "#EAB543" : "unset" }}
+            />
+          ),
+          name: `Giỏ hàng(${cartItems.length})`,
+          func: cart,
+        },
         { icon: <ExitToAppIcon />, name: "Đăng xuất", func: logoutUser },
       ];
 
