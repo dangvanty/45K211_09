@@ -6,7 +6,9 @@
     font: 500 1.5vmax "Roboto";
     text-align: center;
   }
-  
+  .productsHeadingLink{
+    text-decoration: none;
+  }
 .products {
     display: flex;
     flex-wrap: wrap;

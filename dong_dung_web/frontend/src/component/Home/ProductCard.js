@@ -1,28 +1,25 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
-import ReactStars from 'react-rating-stars-component'
-
-
+import { Rating } from "@material-ui/lab";
+import {formatNumber} from "../Product/formatPrice"
 
 const ProductCard = ({product}) => {
   const options={
-    edit:false,
-    color:"rgba(20,20,20,0.1)",
-    activeColor:"tomato",
-    size:window.innerWidth <600 ?15 : 20,
-    value:product.ratings,
-    isHalf:true
+    value: product.ratings,
+    readOnly: true,
+    precision: 0.5,
+    size:`${window.innerWidth <600 ?15 : 20}`,
 }
 
   return (
     <Link className='productCard' to={`/product/${product._id}`}>
         <img src={product.images[0].url} alt={product.name}/>
-        <p>{product.name}</p>
+        <p>{product.name}</p>{" "} <span className='productCardSpan'>({product.numOfReviews} đánh giá)</span>
         <div>
-            <ReactStars {...options }/>{" "}
-            <span className='productCardSpan'>({product.numOfReviews} đánh giá)</span>
+           <Rating {...options }/>{" "}
+            
         </div>
-        <span>{`${product.price} đ`}</span>
+        <span>{`${formatNumber(product.price)} đ`}</span>
     </Link>
   )
 }

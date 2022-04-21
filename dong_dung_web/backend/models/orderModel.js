@@ -11,19 +11,6 @@ const orderSchema = new mongoose.Schema({
       required: true,
     },
 
-    state: {
-      type: String,
-      required: true,
-    },
-
-    country: {
-      type: String,
-      required: true,
-    },
-    pinCode: {
-      type: Number,
-      required: true,
-    },
     phoneNo: {
       type: Number,
       required: true,
@@ -96,7 +83,7 @@ const orderSchema = new mongoose.Schema({
   orderStatus: {
     type: String,
     required: true,
-    default: "Processing",
+    default: "Đang xử lý",
   },
   deliveredAt: Date,
   createdAt: {

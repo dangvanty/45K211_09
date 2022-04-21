@@ -5,17 +5,15 @@ import {useSelector,useDispatch} from 'react-redux';
 import Loader from "../layout/Loader/Loader";
 import ProductCard from '../Home/ProductCard';
 import MetaData from '../layout/MetaData';
-import {useParams} from 'react-router-dom';
+import {useParams, Link} from 'react-router-dom';
 import Pagination from "react-js-pagination";
 import Slider from "@material-ui/core/Slider";
 import MuiInput from "@material-ui/core/Input";
 import { useAlert } from "react-alert";
 import Typography from "@material-ui/core/Typography";
 import {styled} from"@material-ui/core/styles"
-import {FaSearch} from "react-icons/fa"
-const Input = styled(MuiInput)`
-  width: 42px;
-`;
+
+
 const categories=[
     "Nội thất phòng khách",
     "Nội thất phòng ngủ",
@@ -27,9 +25,9 @@ const Product = () => {
     const dispatch =useDispatch();
     const alert = useAlert();
     const [currentPage, setCurrentPage] = useState(1)
-    const [price, setPrice] = useState(0);
-    const [price1, setPrice1] = useState(0);
-    // const [price, setPrice] = useState([0,1000000000])
+    const [price, setPrice] = useState([0, 1000]);
+    
+   
     const [category, setCategory] = useState("");
     const [ratings, setRatings] = useState(0);
     
@@ -37,19 +35,25 @@ const Product = () => {
         setCurrentPage(e);
       };
 
-    // const priceHandler=(event,newPrice)=>{
-    //     setPrice(newPrice);
-    // }
-
-    const priceSliderChange = (event, newPrice) => {
+    const priceHandler=(event,newPrice)=>{
         setPrice(newPrice);
-      };
-    const buttonSliderChange = () => {
-        setPrice(price1);
-      };
-    const priceInputChange = (event) => {
-        setPrice1(event.target.value === '' ? '' : Number(event.target.value));
-      };
+    }
+    const handlerReturn=()=>{
+        setPrice([0,1000]);
+        setRatings(0);
+        setCategory("");
+        setCurrentPage(1)
+    }
+
+    // const priceSliderChange = (event, newPrice) => {
+    //     setPrice(newPrice);
+    //   };
+    // const buttonSliderChange = () => {
+    //     setPrice(price1);
+    //   };
+    // const priceInputChange = (event) => {
+    //     setPrice1(event.target.value === '' ? '' : Number(event.target.value));
+    //   };
    
     const {products, loading, error, productsCount,resultPerPage,filteredProductsCount}= useSelector(state=>state.products)
     let count =filteredProductsCount;
@@ -68,9 +72,10 @@ const Product = () => {
         {loading ? (<Loader />):(
             <Fragment>
                 <MetaData title="Sản phẩm của Đồng Dũng"/>
-                <h2 className='productsHeading'> Sản phẩm của Đồng Dũng
+               <Link onClick={handlerReturn} className='productsHeadingLink' to="/products"><h2 className='productsHeading'> Sản phẩm của Đồng Dũng 
                     <div className='productsHeading-line' ></div>
                 </h2>
+                </Link>
             <div className="products">
                 {products &&
                 products.map((product) => (
@@ -81,21 +86,16 @@ const Product = () => {
             <div className='filterBox'>
                 
             <fieldset>
-               <Typography component="legend">Giá <small>(đvt: vnđ)</small>:</Typography>
+               <Typography component="legend">Giá <small style={{fontSize:10, color:"tomato"}}>(đvt: triệu đồng)</small>:</Typography>
                                        
-                    <Input
-                        value={price1}
-                        size="small"
-                        onChange={priceInputChange}
-                        inputProps={{
-                        
-                        min: 0,
-                        max: 500000000,
-                        type: 'number',
-                        'aria-labelledby': 'input-slider',
-                        }}
-                    />
-                    <FaSearch style={{color:"#EAB543", fontSize:"20px", cursor:"pointer"}} onClick={buttonSliderChange}/>
+               <Slider
+              value={price}
+              onChange={priceHandler}
+              valueLabelDisplay="auto"
+              aria-labelledby="range-slider"
+              min={0}
+              max={1000}
+            />
             </fieldset>      
                
                <fieldset>

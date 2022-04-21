@@ -8,8 +8,6 @@
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.60",
     "@react-google-maps/api": "^2.8.1",
-    "@stripe/react-stripe-js": "^1.4.1",
-    "@stripe/stripe-js": "^1.17.1",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
@@ -26,7 +24,6 @@
     "react-icons": "^4.2.0",
     "react-js-pagination": "^3.0.3",
     "react-material-ui-carousel": "^2.3.1",
-    "react-rating-stars-component": "^2.2.0",
     "react-redux": "^7.2.4",
     "react-router-dom": "^6.2.1",
     "react-scripts": "4.0.3",
@@ -60,5 +57,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://192.168.1.5:4000"
+  "proxy": "http://192.168.1.2:4000"
 }

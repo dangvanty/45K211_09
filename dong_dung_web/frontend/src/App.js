@@ -1,7 +1,7 @@
 import './App.css';
 
 import Header from "./component/layout/Header/Header.js"
-import {BrowserRouter as Router ,Routes, Route} from "react-router-dom"
+import {BrowserRouter as Router ,Routes, Route, } from "react-router-dom"
 
 import WebFont from "webfontloader"
 import {useEffect} from "react"
@@ -23,8 +23,15 @@ import ProtectedRoute from './component/Route/ProtectedRoute'
 import UpdateProfile  from './component/User/UpdateProfile'
 import UpdatePassword  from './component/User/UpdatePassword'
 import ForgotPassword  from './component/User/ForgotPassword'
-import ResetPassword  from './component/User/ResetPassword.js'
-import Cart  from './component/Cart/Cart.js'
+import ResetPassword  from './component/User/ResetPassword'
+import Cart  from './component/Cart/Cart'
+import Shipping  from './component/Cart/Shipping'
+import ConfirmOrder from './component/Cart/ConfirmOrder'
+import OrderSuccess from './component/Cart/OrderSuccess'
+import MyOrders from './component/Order/MyOrders'
+import OrderDetails from './component/Order/OrderDetails.js'
+
+
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
   useEffect(() => {
@@ -57,6 +64,18 @@ function App() {
         <Route  path='/password/reset/:token' element = {<ResetPassword/>}/>
 
         <Route  path='/cart' element = {<Cart/>}/>
+
+        <Route path="/login/shipping" element={(<ProtectedRoute><Shipping /></ProtectedRoute>)} />
+
+       
+
+        <Route path="/success" element={(<ProtectedRoute><OrderSuccess/></ProtectedRoute>)} />
+        <Route path="/orders" element={(<ProtectedRoute><MyOrders/></ProtectedRoute>)} />
+        
+        <Route path="/order/confirm" element={(<ProtectedRoute><ConfirmOrder /></ProtectedRoute>)} />
+        <Route path="/order/:id" element={(<ProtectedRoute><OrderDetails/></ProtectedRoute>)} />
+        
+
         <Route  path='/contact' element = {<Contact/>}/>
         <Route path='/login' element={<LoginSignUp/>}/>
         <Route path='*' element={<NotFound/>}/>

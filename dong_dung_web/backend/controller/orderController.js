@@ -16,7 +16,7 @@ exports.CreateNewOrder=catchAsyncErrors(async(req,res,next)=>{
         shippingPrice,
         totalPrice,
       } = req.body;
-    
+
       const order= await Order.create({
         shippingInfo,
         orderItems,
@@ -42,7 +42,7 @@ exports.getSingleOrder = catchAsyncErrors(async (req,res,next)=>{
     );
 
     if(!order){
-        return next(new ErrorHander("Order không được tìm thấy tại Id này",404));
+        return next(new ErrorHander("Đơn hàng không tìm thấy",404));
     }
 
     res.status(200).json({
@@ -55,7 +55,7 @@ exports.getSingleOrder = catchAsyncErrors(async (req,res,next)=>{
 
 exports.myOrders=catchAsyncErrors(async (req, res, next) => {
     const orders = await Order.find({ user: req.user._id });
-  
+
     res.status(200).json({
       success: true,
       orders,
@@ -66,20 +66,20 @@ exports.myOrders=catchAsyncErrors(async (req, res, next) => {
 
 exports.getAllOrders = catchAsyncErrors(async (req, res, next) => {
     const orders = await Order.find();
-  
+
     let totalAmount = 0;
-  
+
     orders.forEach((order) => {
       totalAmount += order.totalPrice;
     });
-  
+
     res.status(200).json({
       success: true,
       totalAmount,
       orders,
     });
   });
-  
+
   // update order status -admin
   exports.updateOrder = catchAsyncErrors(async(req,res,next)=>{
       const order =await Order.findById(req.params.id);
@@ -103,7 +103,7 @@ exports.getAllOrders = catchAsyncErrors(async (req, res, next) => {
       if (req.body.status === "Delivered") {
         order.deliveredAt = Date.now();
       }
-    
+
       await order.save({ validateBeforeSave: false });
       res.status(200).json({
         success: true,
@@ -112,12 +112,12 @@ exports.getAllOrders = catchAsyncErrors(async (req, res, next) => {
 
   async function updateStock(id, quantity) {
     const product = await Product.findById(id);
-  
+
     product.Stock -= quantity;
-  
+
     await product.save({ validateBeforeSave: false });
   }
-  
+
   //delete order ---admin
 
   exports.deleteOrder=catchAsyncErrors (async(req,res,next)=>{
@@ -131,5 +131,5 @@ exports.getAllOrders = catchAsyncErrors(async (req, res, next) => {
 
       res.status(200).json({
         success: true,
-      });      
+      });
   })

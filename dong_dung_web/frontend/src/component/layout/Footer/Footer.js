@@ -6,7 +6,7 @@ import './Footer.css'
 import logo from "../../../images/logo.png"
 import MyComponent from './GoogleApiWrapper.js';
 
-
+// import {Button} from "../Button/Button"
 
 function Footer () {
   return (
@@ -37,7 +37,7 @@ function Footer () {
         <div className='footer-link-wrapper'>
          <div className='footer-link-items'>
              <h2>Chính sách</h2>
-             <Link to='/sign-up'>Quy định chung</Link>
+             <Link to='/'>Quy định chung</Link>
              <Link to='/'>Bảo mật thông tin</Link>
              <Link to='/'>Vận chuyển, lắp đặt</Link>
              <Link to='/'>Bảo hành</Link>

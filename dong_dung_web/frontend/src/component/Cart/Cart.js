@@ -7,6 +7,7 @@ import { Typography } from "@material-ui/core";
 import RemoveShoppingCartIcon from "@material-ui/icons/RemoveShoppingCart";
 import { Link, useNavigate } from "react-router-dom";
 import MetaData from "../layout/MetaData";
+import {formatNumber} from"../Product/formatPrice"
 const Cart = () => {
   const dispatch = useDispatch();
   const { cartItems } = useSelector((state) => state.cart);
@@ -33,7 +34,8 @@ const Cart = () => {
   };
 
   const checkoutHandler = () => {
-    navigate("/login?redirect=shipping");
+      navigate("/login?redirect=shipping");
+   
   };
 
   return (
@@ -81,7 +83,7 @@ const Cart = () => {
                     </button>
                   </div>
                   <p className="cartSubtotal">{`${
-                    item.price * item.quantity
+                    formatNumber(item.price * item.quantity)
                   } đ`}</p>
                 </div>
               ))}
@@ -89,11 +91,11 @@ const Cart = () => {
             <div className="cartGrossProfit">
               <div></div>
               <div className="cartGrossProfitBox">
-                <p>Tổng cộng</p>
-                <p>{`${cartItems.reduce(
+                <p>Thành tiền</p>
+                <p>{`${formatNumber(cartItems.reduce(
                   (acc, item) => acc + item.quantity * item.price,
                   0
-                )} đ`}</p>
+                ))} đ`}</p>
               </div>
               <div></div>
               <div className="checkOutBtn">
