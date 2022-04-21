@@ -19,6 +19,7 @@ return (
 
         <Router exact path ="/product/:id" component={ProductDetails}/>
         <Router exact path ="/products" component={Products}/>
+        <Router path ="/products/:keyword" component={Products}/>
         <Router exact path ="/search" component={Search}/>
         <Footer/>
     </Router>

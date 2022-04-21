@@ -13,8 +13,16 @@ exports.createProduct = catchAsyncErrors(async (req,res,next)=>{
     });
 });
 // Get All Product
-exports.getAllProducts = catchAsyncErrors( async (req, res) => {
+exports.getAllProducts = catchAsyncErrors( async (req, res) => {\
+    const resultPerPage=8;
     const products = await Product.find();
+
+    const apifeatures=new ApiFeatures(Product.find(),req.query)
+    .search()
+    .filter()
+    .pagination(resultPerPage);
+    const products=await apifeatures.query;
+    
 
     res.status(200).json({
         success: true,

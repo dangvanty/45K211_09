@@ -1,4 +1,5 @@
 import React,{usestate,Fragment} from 'react';
+import "./Search.css"
 
 const Search = ({history}) => {
     const [keyword,setKeyword]=usestate("");
