@@ -12,7 +12,7 @@
     flex-direction: column;
     z-index: 9;
   }
-  
+
   #myOrdersHeading {
     text-align: center;
     font: 400 1.2vmax "Roboto";
@@ -32,16 +32,21 @@
     color: rgba(0, 0, 0, 0.678);
     border: none;
   }
-  
-  .myOrdersTable a {
+  .myOrdersTable a{
     color: rgba(0, 0, 0, 0.527);
+    transition: all 0.5s;
+  }
+  .myOrdersTable button{
+    color: tomato;
     transition: all 0.5s;
   }
   
   .myOrdersTable a:hover {
     color: #EAB543;
   }
-  
+  .myOrdersTable  button:hover{
+    color: #EAB543;
+  }
   .MuiDataGrid-columnHeader {
     background-color: #EAB543;
     padding: 1vmax !important;

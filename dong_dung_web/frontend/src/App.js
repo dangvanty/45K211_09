@@ -20,6 +20,7 @@ import { loadUser } from './actions/userActions';
 import UserOptions from'./component/layout/Header/UserOptions.js'
 import { useSelector } from "react-redux";
 import ProtectedRoute from './component/Route/ProtectedRoute'
+// import ProtectedRouteAdmin from './component/Route/ProtectedRouteAdmin'
 import UpdateProfile  from './component/User/UpdateProfile'
 import UpdatePassword  from './component/User/UpdatePassword'
 import ForgotPassword  from './component/User/ForgotPassword'
@@ -29,7 +30,17 @@ import Shipping  from './component/Cart/Shipping'
 import ConfirmOrder from './component/Cart/ConfirmOrder'
 import OrderSuccess from './component/Cart/OrderSuccess'
 import MyOrders from './component/Order/MyOrders'
-import OrderDetails from './component/Order/OrderDetails.js'
+import OrderDetails from './component/Order/OrderDetails'
+import DashBoard from './component/admin/DashBoard'
+import ProductList from './component/admin/ProductList'
+import NewProduct from './component/admin/NewProduct'
+import UpdateProduct from './component/admin/UpdateProduct'
+import OrderList from './component/admin/OrderList'
+import EditOrder from './component/admin/EditOrder'
+import UserList from './component/admin/UserList'
+import UpdateUser from './component/admin/UpdateUser'
+import ProductReviews from './component/admin/ProductReviews'
+import About from './component/layout/About/About';
 
 
 function App() {
@@ -71,18 +82,35 @@ function App() {
 
         <Route path="/success" element={(<ProtectedRoute><OrderSuccess/></ProtectedRoute>)} />
         <Route path="/orders" element={(<ProtectedRoute><MyOrders/></ProtectedRoute>)} />
-        
+
         <Route path="/order/confirm" element={(<ProtectedRoute><ConfirmOrder /></ProtectedRoute>)} />
         <Route path="/order/:id" element={(<ProtectedRoute><OrderDetails/></ProtectedRoute>)} />
+
+        <Route path="/admin/dashboard" element={(<ProtectedRoute ><DashBoard/></ProtectedRoute>)} />
+
+        <Route path="/admin/products" element={(<ProtectedRoute ><ProductList/></ProtectedRoute>)} />
+        <Route path="/admin/product" element={(<ProtectedRoute ><NewProduct/></ProtectedRoute>)} />
+
+        <Route path="/admin/product/:id" element={(<ProtectedRoute ><UpdateProduct/></ProtectedRoute>)} />
+
+        <Route path="/admin/orders" element={(<ProtectedRoute ><OrderList/></ProtectedRoute>)} />
+        <Route path="/admin/order/:id" element={(<ProtectedRoute ><EditOrder/></ProtectedRoute>)} />
+
+        <Route path="/admin/users" element={(<ProtectedRoute ><UserList/></ProtectedRoute>)} />
+        
+        <Route path="/admin/user/:id" element={(<ProtectedRoute ><UpdateUser/></ProtectedRoute>)} />
+
+        <Route path="/admin/reviews" element={(<ProtectedRoute ><ProductReviews/></ProtectedRoute>)} />
         
 
         <Route  path='/contact' element = {<Contact/>}/>
+        <Route  path='/about' element = {<About/>}/>
         <Route path='/login' element={<LoginSignUp/>}/>
         <Route path='*' element={<NotFound/>}/>
 
       </Routes>
 
-      <Footer/>     
+      {/* <Footer/>      */}
     </Router>
   );
 }

@@ -9,6 +9,7 @@ import MetaData from '../layout/MetaData'
 import {useParams} from 'react-router-dom'
 import ReviewCard  from './ReviewCard '
 import Loader from '../layout/Loader/Loader'
+import Footer from '../layout/Footer/Footer'
 import {useAlert} from 'react-alert'
 import { addItemsToCart } from "../../actions/cartAction";
 import {
@@ -215,7 +216,7 @@ useEffect(() => {
           )}
     </Fragment>
      )}
-
+     <Footer/>
    </Fragment>
   )
 }

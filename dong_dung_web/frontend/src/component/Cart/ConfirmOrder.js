@@ -8,11 +8,12 @@ import { Typography } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
 import {formatNumber} from "../Product/formatPrice"
 import {createOrder,clearErrors } from "../../actions/orderAction"
+import { useState } from "react";
 
 const ConfirmOrder = () => {
   const navigate=useNavigate();
   const dispatch = useDispatch();
-
+  // const CartItems = JSON.parse(sessionStorage.getItem("cartItems"));
  
   const { shippingInfo, cartItems } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.user);
@@ -31,15 +32,12 @@ const ConfirmOrder = () => {
  
   const address = `${shippingInfo.address}, ${shippingInfo.city}`;
 
-  
-    // const data = {
-    //   subtotal,
-    //   shippingCharges,
-    //   tax,
-    //   totalPrice,
-    // };
-    // sessionStorage.setItem("orderInfo", JSON.stringify(data));
-    // shippingInfo,orderItems,itemsPrice,taxPrice,shippingPrice,totalPrice
+  // const [image, setImage] =useState(CartItems.image)
+  // const [name, setName] =useState(CartItems.name)
+  // const [price, setPrice] =useState(CartItems.price)
+  // const [product, setProduct] =useState(CartItems.product)
+  // const [quantity, setQuantity] =useState(CartItems.quantity)
+  // const [stock, setStock] = useState(CartItems.stock)
   
   const orderSubmit = (e) => {
     e.preventDefault();
@@ -53,14 +51,15 @@ const ConfirmOrder = () => {
         totalPrice
       })
     );
+    
     navigate("/success")
   }
-  // useEffect(() => {
-  //   if (error) {
-  //     alert.error(error);
-  //     dispatch(clearErrors());
-  //   }
-  // }, [dispatch, error, alert]);
+  useEffect(() => {
+    if (error) {
+      alert.error(error);
+      dispatch(clearErrors());
+    }
+  }, [dispatch, error, alert]);
 
   return (
     <Fragment>

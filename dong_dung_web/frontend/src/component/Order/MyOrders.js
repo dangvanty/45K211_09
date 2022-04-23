@@ -2,9 +2,12 @@ import React, { Fragment, useEffect } from "react";
 import { DataGrid } from "@material-ui/data-grid";
 import "./myOrders.css";
 import { useSelector, useDispatch } from "react-redux";
-import { clearErrors, myOrders } from "../../actions/orderAction";
+import { clearErrors, myOrders, deleteOrderForUser} from "../../actions/orderAction";
+import { DELETE_ORDER_USER_RESET } from "../../constants/orderConstants";
+import { Button } from "@material-ui/core";
+import DeleteIcon from "@material-ui/icons/Delete";
 import Loader from "../layout/Loader/Loader";
-import { Link } from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 import { useAlert } from "react-alert";
 import Typography from "@material-ui/core/Typography";
 import MetaData from "../layout/MetaData";
@@ -12,13 +15,18 @@ import LaunchIcon from "@material-ui/icons/Launch";
 import {formatNumber} from "../Product/formatPrice"
 const MyOrders = () => {
   const dispatch = useDispatch();
-
+  const navigate =useNavigate()
   const alert = useAlert();
 
   const { loading, error, orders } = useSelector((state) => state.myOrders);
+ 
+  const { error: deleteError, isDeleted } = useSelector((state) => state.orderUser);
 
   const { user } = useSelector((state) => state.user);
 
+  const deleteOrderHandler = (id) => {
+    dispatch(deleteOrderForUser(id));
+  };
   const columns = [
     { field: "id", headerName: "Order ID", minWidth: 200, flex: 0.4 },
 
@@ -58,9 +66,22 @@ const MyOrders = () => {
       sortable: false,
       renderCell: (params) => {
         return (
+          <>
           <Link to={`/order/${params.getValue(params.id, "id")}`}>
             <LaunchIcon />
           </Link>
+          {params.getValue(params.id,"status") =="Đang xử lý" && (
+            
+            <Button
+              onClick={() =>
+                deleteOrderHandler(params.getValue(params.id, "id"))
+              }
+            >
+              <DeleteIcon />
+            </Button>
+            
+          )}
+          </>
         );
       },
     },
@@ -82,9 +103,18 @@ const MyOrders = () => {
       alert.error(error);
       dispatch(clearErrors());
     }
+    if (deleteError) {
+      alert.error(deleteError);
+      dispatch(clearErrors());
+    }
+    if (isDeleted) {
+      alert.success("Xóa đơn hàng thành công");
+      navigate("/orders");
+      dispatch({ type: DELETE_ORDER_USER_RESET });
+    }
 
     dispatch(myOrders());
-  }, [dispatch, alert, error]);
+  }, [dispatch, alert, error, navigate, isDeleted, deleteError]);
 
   return (
     <Fragment>

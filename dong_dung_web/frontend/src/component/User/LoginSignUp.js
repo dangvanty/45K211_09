@@ -71,13 +71,14 @@ const LoginSignUp = () => {
     }
   };
 const shipping =location.search.split("=")[1];
+  
     const redirect = location.search ? shipping : "/account";
   
     
     const navigate=useNavigate()
   useEffect(() => {
     if (error) {
-      alert.error(error);
+      alert.error("Lỗi: Kiểm tra lại thông tin?");
       dispatch(clearErrors());
     }
    
@@ -135,7 +136,7 @@ const shipping =location.search.split("=")[1];
                   <LockOpenIcon />
                   <input
                     type="password"
-                    placeholder="mật khẩu"
+                    placeholder="Mật khẩu"
                     required
                     value={loginPassword}
                     onChange={(e) => setLoginPassword(e.target.value)}

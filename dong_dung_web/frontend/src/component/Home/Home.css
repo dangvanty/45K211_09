@@ -9,6 +9,9 @@
     color: #EAB543;
    
 }
+a{
+  text-decoration: none;
+}
 .banner:after {
     content : "";
     display: block;

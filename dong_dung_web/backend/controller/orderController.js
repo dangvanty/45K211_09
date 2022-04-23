@@ -88,11 +88,11 @@ exports.getAllOrders = catchAsyncErrors(async (req, res, next) => {
         return next(new ErrorHander("Order không được tìm thấy tại Id này ", 404));
       }
 
-      if (order.orderStatus === "Delivered") {
-        return next(new ErrorHander("Đơn hàng đang được Delivered", 400));
+      if (order.orderStatus === "Đã giao hàng") {
+        return next(new ErrorHander("Đơn hàng này bạn đã giao thành công ", 400));
       }
 
-      if(req.body.status==="Shipped"){
+      if(req.body.status==="Đang giao hàng"){
         order.orderItems.forEach(async (o) => {
             await updateStock(o.product, o.quantity);
 
@@ -100,7 +100,7 @@ exports.getAllOrders = catchAsyncErrors(async (req, res, next) => {
       }
       order.orderStatus=req.body.status;
 
-      if (req.body.status === "Delivered") {
+      if (req.body.status === "Đã giao hàng") {
         order.deliveredAt = Date.now();
       }
 
@@ -127,6 +127,24 @@ exports.getAllOrders = catchAsyncErrors(async (req, res, next) => {
         return next(new ErrorHander("Order không được tìm thấy tại Id này ", 404));
       }
 
+      await order.remove();
+
+      res.status(200).json({
+        success: true,
+      });
+  })
+
+/// delete Oder when processing
+  exports.deleteOrderForUser=catchAsyncErrors (async(req,res,next)=>{
+      const order=await Order.findById(req.params.id);
+      const orderStatus=await Order.findById(req.params.status);
+      if (!order) {
+        return next(new ErrorHander("Order không được tìm thấy tại Id này ", 404));
+      }
+      if (orderStatus =="Đang giao hàng" || orderStatus =="Đã giao hàng")
+      {
+        return next(new ErrorHander("Đơn hàng này không cho phép xóa ", 404));
+      }
       await order.remove();
 
       res.status(200).json({
