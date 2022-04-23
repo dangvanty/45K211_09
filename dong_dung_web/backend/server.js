@@ -12,7 +12,8 @@ process.on("uncaughtException", (err) => {
     process.exit(1);
   });
 //connect to database:
-connectDatabase()
+connectDatabase();
+
 
 
 const server=app.listen(process.env.PORT,()=>{
