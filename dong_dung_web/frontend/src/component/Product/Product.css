@@ -7,7 +7,13 @@
     text-align: center;
   }
   .productsHeadingLink{
+   
     text-decoration: none;
+    
+  }
+  #component-helper{
+    width: 70%;
+    font-size: small;
   }
 .products {
     display: flex;

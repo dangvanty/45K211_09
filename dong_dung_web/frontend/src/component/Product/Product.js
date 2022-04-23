@@ -8,11 +8,13 @@ import MetaData from '../layout/MetaData';
 import {useParams, Link} from 'react-router-dom';
 import Pagination from "react-js-pagination";
 import Slider from "@material-ui/core/Slider";
-import MuiInput from "@material-ui/core/Input";
+import {FaSearch} from "react-icons/fa"
+import Box from '@material-ui/core/Box';
+import Input from "@material-ui/core/Input";
 import { useAlert } from "react-alert";
 import Typography from "@material-ui/core/Typography";
 import {styled} from"@material-ui/core/styles"
-
+import Footer from "../layout/Footer/Footer"
 
 const categories=[
     "Nội thất phòng khách",
@@ -34,7 +36,6 @@ const Product = () => {
     const setCurrentPageNo = (e) => {
         setCurrentPage(e);
       };
-
     const priceHandler=(event,newPrice)=>{
         setPrice(newPrice);
     }
@@ -43,17 +44,17 @@ const Product = () => {
         setRatings(0);
         setCategory("");
         setCurrentPage(1)
+        setName("")
     }
-
-    // const priceSliderChange = (event, newPrice) => {
-    //     setPrice(newPrice);
-    //   };
-    // const buttonSliderChange = () => {
-    //     setPrice(price1);
-    //   };
-    // const priceInputChange = (event) => {
-    //     setPrice1(event.target.value === '' ? '' : Number(event.target.value));
-    //   };
+    const [name, setName] = useState("")
+    const [name1, setName1] = useState("")
+   
+    const buttonSerchName = () => {
+        setName(name1);
+      };
+    const nameInputChange = (event) => {
+        setName1(event.target.value === '' ? '' : String(event.target.value));
+      };
    
     const {products, loading, error, productsCount,resultPerPage,filteredProductsCount}= useSelector(state=>state.products)
     let count =filteredProductsCount;
@@ -64,8 +65,8 @@ const Product = () => {
             dispatch(clearErrors());
           }
 
-     dispatch(getProduct(keyword, currentPage,price,category,ratings))
-    }, [dispatch,keyword,currentPage,price,category,ratings,alert,error])
+     dispatch(getProduct(keyword, currentPage,price,category,ratings,name))
+    }, [dispatch,keyword,currentPage,price,category,ratings,alert,error,name])
     
   return (
     <Fragment>
@@ -85,6 +86,29 @@ const Product = () => {
             
             <div className='filterBox'>
                 
+            <fieldset>
+               <Typography component="legend">Tìm kiếm <FaSearch style={{color :"#EAB543", cursor:"pointer"}} onClick={buttonSerchName} /></Typography>
+                    <Box component="form"
+                        sx={{
+                            '& > :not(style)': { m: 1, width: 'auto' },
+                        }}
+                        noValidate
+                        autoComplete="off">
+                        <span>
+                        <Input
+                            id="component-helper"
+                            value={name1}
+                            onChange={nameInputChange}
+                            aria-describedby="component-helper-text"
+                            placeholder='tên sản phẩm'
+                            />
+                            
+                            
+                        </span>
+                       
+                    
+                    </Box>    
+            </fieldset>      
             <fieldset>
                <Typography component="legend">Giá <small style={{fontSize:10, color:"tomato"}}>(đvt: triệu đồng)</small>:</Typography>
                                        
@@ -146,6 +170,7 @@ const Product = () => {
             </div>)}
             </Fragment>
         )}
+        <Footer/>
     </Fragment>
   )
 }
