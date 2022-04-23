@@ -45,7 +45,7 @@ function Home() {
               <p>Đặt hàng, mua hàng nhanh chóng trên Website</p>
               <h1>TÌM SẢN PHẨM MÀ BẠN CẦN DƯỚI ĐÂY!</h1>
               <a href="#container">
-              <Button buttonStyle='btn--outline'>Scroll<CgMouse/></Button>
+              <Button buttonStyle='btn--outline'>Khám phá<CgMouse/></Button>
               </a>
               
           </div>

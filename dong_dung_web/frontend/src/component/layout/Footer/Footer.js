@@ -45,24 +45,24 @@ function Footer () {
          </div>
          <div className='footer-link-items'>
              <h2>Liên hệ</h2>
-             <Link to='/'>Giới thiệu Đồng Dũng</Link>
-             <Link to='/'>Thông tin liên hệ</Link>
-             <Link to='/'>Hỏi đáp</Link>
-             <Link to='/'>Tuyển dụng</Link>
+             <Link to='/about'>Giới thiệu Đồng Dũng</Link>
+             <Link to='/about'>Thông tin liên hệ</Link>
+             <Link to='/about'>Hỏi đáp</Link>
+             <Link to='/about'>Tuyển dụng</Link>
          </div>
         </div>
         <div className='footer-link-wrapper'>
          <div className='footer-link-items'>
              <h2>Sản phẩm</h2>
-             <Link to='/'>Nội thất phòng khách</Link>
-             <Link to='/'>Nội thất phòng ngủ</Link>
-             <Link to='/'>Nội thất phòng thờ</Link>
-             <Link to='/'>Đồ gỗ mỹ nghệ</Link>
+             <Link to='/products'>Nội thất phòng khách</Link>
+             <Link to='/products'>Nội thất phòng ngủ</Link>
+             <Link to='/products'>Nội thất phòng thờ</Link>
+             <Link to='/products'>Đồ gỗ mỹ nghệ</Link>
          </div>
          <div className='footer-link-items'>
              <h2>Truyền thông</h2>
              <Link to='/'>Instagram</Link>
-             <Link to='/'>Facebook</Link>
+             <Link to='/about'>Facebook</Link>
              <Link to='/'>Youtube</Link>
              <Link to='/'>Twitter</Link>
          </div>
@@ -77,7 +77,7 @@ function Footer () {
                </div>
                <small className='website-rights'>Đồng Dũng © 2022 Bản quyền nhóm 9 - lớp45k21.1</small>
                <div className='social-icons'>
-                <Link className='social-icon-link facebook' to='/' target='_blank' aria-label='Facebook'><i className='fab fa-facebook-f'/></Link>
+                <Link className='social-icon-link facebook' to='/about' target='_blank' aria-label='Facebook'><i className='fab fa-facebook-f'/></Link>
                 <Link className='social-icon-link instagram' to='/' target='_blank' aria-label='Instagram'><i className='fab fa-instagram'/></Link>
                 <Link className='social-icon-link youtube' to='/' target='_blank' aria-label='Instagram'><i className='fab fa-youtube'/></Link>
                 <Link className='social-icon-link twitter' to='/' target='_blank' aria-label='Instagram'><i className='fab fa-twitter'/></Link>

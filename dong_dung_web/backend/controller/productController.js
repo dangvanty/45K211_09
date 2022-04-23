@@ -87,21 +87,6 @@ exports.getProductDetails =catchAsyncErrors(async(req,res,next)=>{
 }
 )
 
-// search:
-// exports.getProductDetails =catchAsyncErrors(async(req,res,next)=>{
-//     const product = await Product.findById(req.params.id)
-//
-//         if(!product){
-//             return next(new ErrorHander("Không tìm thấy sản phẩm nào",404))
-//         }
-//
-//     res.status(200).json({
-//         success:true,
-//         product,
-//
-//     })
-// }
-// )
 
 //update product -- admin
 exports.updateProduct = catchAsyncErrors(async(req,res,next)=>{
